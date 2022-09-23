@@ -21,6 +21,16 @@ RegisterNetEvent('QBCore:Player:SetPlayerData', function(val)
     PlayerData = val
 end)
 
+local function GetCraftableItems()
+	local items = {}
+	for k,v in pairs(Config.Main) do
+		if PlayerData.metadata["craftinglevel"] >= v.level then
+			items[k] = v
+		end
+	end
+	return items
+end
+
 RegisterNetEvent('mt-crafting:client:AbrirMenuCraft', function()
     local columns = {
         {
@@ -28,7 +38,8 @@ RegisterNetEvent('mt-crafting:client:AbrirMenuCraft', function()
             isMenuHeader = true,
         },
     }
-    for k, v in pairs(Config.Main) do
+    local items = GetCraftableItems()
+    for k, v in pairs(items) do
         local item = {}
         item.header = "<img src=nui://qb-inventory/html/images/"..QBCore.Shared.Items[v.itemName].image.." width=35px style='margin-right: 10px'> " .. v.label .. "<br> Required Points: " .. v.level
         local text = ""
@@ -54,7 +65,7 @@ local function CraftItems(item)
     local pontos = Config.Main[item].points
     local prob = math.random(1, 100)
     if QBCore.Functions.GetPlayerData().metadata["craftinglevel"] >= Config.Main[item].level then
-        QBCore.Functions.Progressbar('crafting', Lang.crafting .. Config.Main[item].label, 5000, false, false, {
+        QBCore.Functions.Progressbar('crafting', Lang.crafting .. Config.Main[item].label, Config.Main[item].craftingTime, false, false, {
             disableMovement = true,
             disableCarMovement = true,
             disableMouse = false,
@@ -144,7 +155,16 @@ RegisterNetEvent('mt-crafting:client:EliminarMesa', function(obj)
             anim = 'pushcar_offcliff_f',
             flags = 16,
         }, {}, {}, function()
-            DeleteEntity(obj)
+            if DoesEntityExist(obj) then
+                SetEntityAsMissionEntity(obj)
+                DeleteEntity(obj)
+                if not DoesEntityExist(obj) then
+                    TriggerServerEvent('mt-crafting:server:AddItem', 'mesa_craft', 1)
+                    TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items['mesa_craft'], "add")
+                else
+                    QBCore.Functions.Notify("You can't pick up this table", 'error', 5000)
+                end
+            end
         end)
     end
 end)

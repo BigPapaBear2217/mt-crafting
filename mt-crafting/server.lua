@@ -13,18 +13,6 @@ RegisterNetEvent('mt-crafting:server:AddPontos', function(pontos)
     Player.Functions.SetMetaData("craftinglevel", Player.PlayerData.metadata["craftinglevel"]+(pontos))
 end)
 
-RegisterNetEvent('mt-crafting:server:RemoveItem', function(item, count)
-    local Player = QBCore.Functions.GetPlayer(source)
-    
-    Player.Functions.RemoveItem(item, count)
-end)
-
-RegisterNetEvent('mt-crafting:server:AddItem', function(item, count)
-    local Player = QBCore.Functions.GetPlayer(source)
-    
-    Player.Functions.AddItem(item, count)
-end)
-
 RegisterNetEvent('mt-crafting:server:TirarPontos', function(pontosPerdidos)
     local Player = QBCore.Functions.GetPlayer(source)
     

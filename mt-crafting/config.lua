@@ -4,6 +4,7 @@ Config = {
             itemName = "weapon_pistol_mk2", -- item name
             label = "PISTOL MK2", -- item label
             level = 10, -- amount of level requeried
+            craftingTime = 3000, -- 1000 = 1 second
             points = 5, -- how many points you win in 1 craft
             lostpoints = 1, -- how many points you lost if fail the craft
             chance = 70, -- chance to to success craft
