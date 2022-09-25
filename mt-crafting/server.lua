@@ -36,3 +36,15 @@ QBCore.Functions.CreateCallback('mt-crafting:server:ItemsSuficientes', function(
         end
     end
 end)
+
+RegisterNetEvent('mt-crafting:server:RemoveItem', function(item, count)
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    Player.Functions.RemoveItem(item, count)
+end)
+
+RegisterNetEvent('mt-crafting:server:AddItem', function(item, count)
+    local Player = QBCore.Functions.GetPlayer(source)
+
+    Player.Functions.AddItem(item, count)
+end)
