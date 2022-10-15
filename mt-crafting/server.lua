@@ -48,3 +48,11 @@ RegisterNetEvent('mt-crafting:server:AddItem', function(item, count)
 
     Player.Functions.AddItem(item, count)
 end)
+
+RegisterNetEvent('mt-crafting:server:AddWeapon', function(item, count, info)
+    local Player = QBCore.Functions.GetPlayer(source)
+    local info = {}
+    info.serie = info
+
+    Player.Functions.AddItem(item, count, nil, info)
+end)

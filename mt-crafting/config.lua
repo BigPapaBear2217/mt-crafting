@@ -8,6 +8,7 @@ Config = {
             points = 5, -- how many points you win in 1 craft
             lostpoints = 1, -- how many points you lost if fail the craft
             chance = 70, -- chance to to success craft
+            type = 'weapon',
             items = { -- requeried items
                 [1] = {
                     item = "iron",
@@ -34,6 +35,7 @@ Config = {
             points = 1, -- how many points you win in 1 craft
             lostpoints = 1, -- how many points you lost if fail the craft
             chance = 70, -- chance to to success craft
+            type = 'item',
             items = { -- requeried items
                 [1] = {
                     item = "iron",
@@ -61,6 +63,7 @@ Config = {
     ['Logs'] = {
         ['UseLogs'] = true,
     },
+    ['GenerateSerialNumberAtWeapons'] = true,
 }
 
 Lang = {

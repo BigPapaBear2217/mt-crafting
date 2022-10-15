@@ -82,9 +82,22 @@ local function CraftItems(item)
                     else
                         QBCore.Functions.Notify(Lang.craftSuccess .. Config.Main[item].label, 'success')
                     end
-                TriggerServerEvent('mt-crafting:server:AddItem', Config.Main[item].itemName, 1)
-                TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items[Config.Main[item].itemName], "add")
-                TriggerServerEvent('mt-crafting:server:AddPontos', pontos)
+                if Config.Main[item].type == 'weapon' then
+                    if Config.Main['GenerateSerialNumberAtWeapons'] == true then
+                        local info = tostring(QBCore.Shared.RandomInt(2) .. QBCore.Shared.RandomStr(3) .. QBCore.Shared.RandomInt(1) .. QBCore.Shared.RandomStr(2) .. QBCore.Shared.RandomInt(3) .. QBCore.Shared.RandomStr(4))
+                        TriggerServerEvent('mt-crafting:server:AddWeapon', Config.Main[item].itemName, 1, info)
+                        TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items[Config.Main[item].itemName], "add")
+                        TriggerServerEvent('mt-crafting:server:AddPontos', pontos)
+                    else
+                        TriggerServerEvent('mt-crafting:server:AddItem', Config.Main[item].itemName, 1)
+                        TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items[Config.Main[item].itemName], "add")
+                        TriggerServerEvent('mt-crafting:server:AddPontos', pontos)
+                    end
+                else
+                    TriggerServerEvent('mt-crafting:server:AddItem', Config.Main[item].itemName, 1)
+                    TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items[Config.Main[item].itemName], "add")
+                    TriggerServerEvent('mt-crafting:server:AddPontos', pontos)
+                end
                 for k, v in pairs(Config.Main[item].items) do
                     TriggerServerEvent('mt-crafting:server:RemoveItem', v.item, v.amount)
                     TriggerEvent("inventory:client:ItemBox", QBCore.Shared.Items[v.item], "remove")
